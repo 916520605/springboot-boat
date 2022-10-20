@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boat.mapper.BaseShipMapper">
+    <resultMap id="BaseResultMap" type="com.boat.entity.BaseShip">
+        <!--@mbg.generated-->
+        <!--@Table t_baseship-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="shipName" jdbcType="VARCHAR" property="shipName"/>
+        <result column="builtDate" jdbcType="DATE" property="builtDate"/>
+        <result column="imo" jdbcType="VARCHAR" property="imo"/>
+        <result column="nationality" jdbcType="VARCHAR" property="nationality"/>
+        <result column="grossTonnage" jdbcType="DECIMAL" property="grossTonnage"/>
+        <result column="netTons" jdbcType="DECIMAL" property="netTons"/>
+        <result column="DWT" jdbcType="DECIMAL" property="DWT"/>
+        <result column="homePort" jdbcType="VARCHAR" property="homePort"/>
+        <result column="shipOwner" jdbcType="VARCHAR" property="shipOwner"/>
+        <result column="callNumber" jdbcType="VARCHAR" property="callNumber"/>
+        <result column="phoneNumber" jdbcType="VARCHAR" property="phoneNumber"/>
+        <result column="length" jdbcType="VARCHAR" property="length"/>
+        <result column="width" jdbcType="VARCHAR" property="width"/>
+        <result column="flag" jdbcType="CHAR" property="flag"/>
+        <result column="creatTime" jdbcType="TIMESTAMP" property="creatTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, shipName, builtDate, imo, nationality, grossTonnage, netTons, DWT, homePort,
+        shipOwner, callNumber, phoneNumber, `length`, width, flag, creatTime
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from t_baseship
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete
+        from t_baseship
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.boat.entity.BaseShip"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into t_baseship (shipName, builtDate, imo,
+                                nationality, grossTonnage, netTons,
+                                DWT, homePort, shipOwner,
+                                callNumber, phoneNumber, `length`,
+                                width, flag, creatTime)
+        values (#{shipName,jdbcType=VARCHAR}, #{builtDate,jdbcType=DATE}, #{imo,jdbcType=VARCHAR},
+                #{nationality,jdbcType=VARCHAR}, #{grossTonnage,jdbcType=DECIMAL}, #{ netTons,jdbcType=DECIMAL},
+                #{DWT,jdbcType=DECIMAL}, #{homePort,jdbcType=VARCHAR}, #{shipOwner,jdbcType=VARCHAR},
+                #{callNumber,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{length,jdbcType=VARCHAR},
+                #{width,jdbcType=VARCHAR}, #{flag,jdbcType=CHAR}, #{creatTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.boat.entity.BaseShip"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into t_baseship
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shipName != null">
+                shipName,
+            </if>
+            <if test="builtDate != null">
+                builtDate,
+            </if>
+            <if test="imo != null">
+                imo,
+            </if>
+            <if test="nationality != null">
+                nationality,
+            </if>
+            <if test="grossTonnage != null">
+                grossTonnage,
+            </if>
+            <if test="netTons != null">
+                netTons,
+            </if>
+            <if test="DWT != null">
+                DWT,
+            </if>
+            <if test="homePort != null">
+                homePort,
+            </if>
+            <if test="shipOwner != null">
+                shipOwner,
+            </if>
+            <if test="callNumber != null">
+                callNumber,
+            </if>
+            <if test="phoneNumber != null">
+                phoneNumber,
+            </if>
+            <if test="length != null">
+                length,
+            </if>
+            <if test="width != null">
+                width,
+            </if>
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="creatTime != null">
+                creatTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shipName != null">
+                #{shipName,jdbcType=VARCHAR},
+            </if>
+            <if test="builtDate != null">
+                #{builtDate,jdbcType=DATE},
+            </if>
+            <if test="imo != null">
+                #{imo,jdbcType=VARCHAR},
+            </if>
+            <if test="nationality != null">
+                #{nationality,jdbcType=VARCHAR},
+            </if>
+            <if test="grossTonnage != null">
+                #{grossTonnage,jdbcType=DECIMAL},
+            </if>
+            <if test="netTons != null">
+                #{ netTons,jdbcType=DECIMAL},
+            </if>
+            <if test="DWT != null">
+                #{DWT,jdbcType=DECIMAL},
+            </if>
+            <if test="homePort != null">
+                #{homePort,jdbcType=VARCHAR},
+            </if>
+            <if test="shipOwner != null">
+                #{shipOwner,jdbcType=VARCHAR},
+            </if>
+            <if test="callNumber != null">
+                #{callNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneNumber != null">
+                #{phoneNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="length != null">
+                #{length,jdbcType=VARCHAR},
+            </if>
+            <if test="width != null">
+                #{width,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=CHAR},
+            </if>
+            <if test="creatTime != null">
+                #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.boat.entity.BaseShip">
+        <!--@mbg.generated-->
+        update t_baseship
+        <set>
+            <if test="shipName != null">
+                shipName = #{shipName,jdbcType=VARCHAR},
+            </if>
+            <if test="builtDate != null">
+                builtDate = #{builtDate,jdbcType=DATE},
+            </if>
+            <if test="imo != null">
+                imo = #{imo,jdbcType=VARCHAR},
+            </if>
+            <if test="nationality != null">
+                nationality = #{nationality,jdbcType=VARCHAR},
+            </if>
+            <if test="grossTonnage != null">
+                grossTonnage = #{grossTonnage,jdbcType=DECIMAL},
+            </if>
+            <if test="netTons != null">
+                netTons = #{ netTons,jdbcType=DECIMAL},
+            </if>
+            <if test="DWT != null">
+                DWT = #{DWT,jdbcType=DECIMAL},
+            </if>
+            <if test="homePort != null">
+                homePort = #{homePort,jdbcType=VARCHAR},
+            </if>
+            <if test="shipOwner != null">
+                shipOwner = #{shipOwner,jdbcType=VARCHAR},
+            </if>
+            <if test="callNumber != null">
+                callNumber = #{callNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneNumber != null">
+                phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="length != null">
+                length = #{length,jdbcType=VARCHAR},
+            </if>
+            <if test="width != null">
+                width = #{width,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=CHAR},
+            </if>
+            <if test="creatTime != null">
+                creatTime = #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.boat.entity.BaseShip">
+        <!--@mbg.generated-->
+        update t_baseship
+        set shipName     = #{shipName,jdbcType=VARCHAR},
+            builtDate    = #{builtDate,jdbcType=DATE},
+            imo          = #{imo,jdbcType=VARCHAR},
+            nationality  = #{nationality,jdbcType=VARCHAR},
+            grossTonnage = #{grossTonnage,jdbcType=DECIMAL},
+            netTons      = #{ netTons,jdbcType=DECIMAL},
+            DWT          = #{DWT,jdbcType=DECIMAL},
+            homePort     = #{homePort,jdbcType=VARCHAR},
+            shipOwner    = #{shipOwner,jdbcType=VARCHAR},
+            callNumber   = #{callNumber,jdbcType=VARCHAR},
+            phoneNumber  = #{phoneNumber,jdbcType=VARCHAR},
+            length       = #{length,jdbcType=VARCHAR},
+            width        = #{width,jdbcType=VARCHAR},
+            flag         = #{flag,jdbcType=CHAR},
+            creatTime    = #{creatTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <!--auto generated by MybatisCodeHelper on 2022-09-21-->
+    <select id="findAllBYAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_baseship
+        <where>
+            <if test="shipName != null and shipName != ''">
+                and shipName like concat('%', #{shipName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="imo != null and imo != ''">
+                and imo like concat('%', #{imo,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="shipOwner != null and shipOwner != ''">
+                and shipOwner like concat('%', #{shipOwner,jdbcType=VARCHAR}, '%')
+            </if>
+            and flag = 1 order by creatTime desc
+        </where>
+    </select>
+    <delete id="deleteByIds" parameterType="Long">
+        update t_baseship
+        set flag = 0 where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <!--auto generated by MybatisCodeHelper on 2022-09-23-->
+    <select id="selectByImo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_baseship
+        where imo = #{imo,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectAllByImoAndNotId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_baseship
+    <where>
+            <if test="id != null">
+                and id != #{id,jdbcType=BIGINT}
+            </if>
+            and imo = #{imo,jdbcType=VARCHAR}
+        </where>
+</select>
+</mapper>
