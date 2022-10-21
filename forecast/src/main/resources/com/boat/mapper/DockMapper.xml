@@ -32,7 +32,7 @@
                 and td.dock_name like concat('%', #{dockName}, '%')
             </if>
         </where>
-        ORDER BY td.dock_name, tp.port_name
+        ORDER BY td.dock_name
     </select>
 
     <select id="selectAllById" resultType="java.util.Map">

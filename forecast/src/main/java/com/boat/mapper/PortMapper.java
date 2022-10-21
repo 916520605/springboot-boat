@@ -38,4 +38,14 @@ public interface PortMapper {
      */
     Port selectByPortCode(@Param("portCode") String portCode);
 
+    /**
+     * 根据id批量删除
+     *
+     * @param ids id
+     * @return int
+     * @author 李云鹏
+     * @date 2022/10/21
+     */
+    int deleteByIds(Long[] ids);
+
 }

@@ -62,7 +62,7 @@ public class DockService {
      */
     @Transactional(rollbackFor = Exception.class)
     public int insertOrUpdate(Map<String, Object> map) {
-        // 判断传过来的map的id值或者dockId值
+        // 判断传过来的map是否包含id属性，有则是更新，没有就是新增
 
         boolean flag = map.containsKey("id");
         Dock dock = new Dock();
@@ -116,5 +116,10 @@ public class DockService {
      */
     public int addPort(Port port) {
         return this.portMapper.insert(port);
+    }
+
+    public int deleteByIds(Long[] ids) {
+
+        return this.portMapper.deleteByIds(ids);
     }
 }

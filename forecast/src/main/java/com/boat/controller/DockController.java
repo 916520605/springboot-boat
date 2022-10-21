@@ -5,11 +5,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.web.bind.annotation.*;
 
 import com.boat.entity.Dock;
 import com.boat.entity.Port;
 import com.boat.service.DockService;
+import com.boat.utils.Result;
+import com.boat.utils.Status;
 
 /**
  * @Author 李云鹏
@@ -53,6 +56,17 @@ public class DockController {
     @PostMapping("/addAtUpdate")
     public int insert(@RequestBody Port port) {
         return this.dockService.addPort(port);
+    }
+
+    @DeleteMapping("/delete/{ids}")
+    public Result<T> deleteByIds(@PathVariable("ids") Long[] ids) {
+        int i = this.dockService.deleteByIds(ids);
+        if (i > 0) {
+            return Result.buildR(Status.OK, "删除成功");
+        } else {
+            return Result.buildR(Status.SYSTEM_ERROR, "删除失败");
+        }
+
     }
 
 }
