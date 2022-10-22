@@ -63,4 +63,14 @@ public interface DockMapper {
      */
     int updateByDockId(Dock dock);
 
+    /**
+     * 删除通过码头id
+     *
+     * @param dockId 码头id
+     * @return int
+     * @author 李云鹏
+     * @date 2022/10/22
+     */
+    int deleteByDockId(@Param("dockId") Long dockId);
+
 }

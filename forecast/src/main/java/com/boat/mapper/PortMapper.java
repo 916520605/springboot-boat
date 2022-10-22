@@ -1,5 +1,7 @@
 package com.boat.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -48,4 +50,23 @@ public interface PortMapper {
      */
     int deleteByIds(Long[] ids);
 
+    /**
+     * 查询所有不在传过来的数组id中的list
+     *
+     * @param ids id
+     * @return {@link List }<{@link Port }>
+     * @author 李云鹏
+     * @date 2022/10/22
+     */
+    List<Long> selectByNotInIds(Long[] ids);
+
+    /**
+     * 查询所有在传过来的数组id中的list
+     *
+     * @param ids id
+     * @return {@link List }<{@link Port }>
+     * @author 李云鹏
+     * @date 2022/10/22
+     */
+    List<Long> selectByInIds(Long[] ids);
 }

@@ -20,7 +20,7 @@ public class Port {
      */
     private Long id;
 
-    private String dockId;
+    private Long dockId;
 
     private String portName;
 

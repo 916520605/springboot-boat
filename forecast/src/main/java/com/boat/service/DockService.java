@@ -1,8 +1,10 @@
 package com.boat.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -87,7 +89,7 @@ public class DockService {
             int i = this.dockMapper.insert(dock);
             Dock dock1 = this.dockMapper.selectDockCodeByDockCode((String)map.get("dockCode"));
             Long dockId = dock1.getDockId();
-            port.setDockId(String.valueOf(dockId));
+            port.setDockId(dockId);
             int insert = this.portMapper.insert(port);
             return i + insert;
         }
@@ -118,8 +120,36 @@ public class DockService {
         return this.portMapper.insert(port);
     }
 
+    /**
+     * 删除由ids 该方法涉及到事务异常回滚。
+     * 
+     * @param ids id
+     * @return int
+     * @author 李云鹏
+     * @date 2022/10/22
+     */
+    @Transactional(rollbackFor = Exception.class)
     public int deleteByIds(Long[] ids) {
+        List<Long> inDockIds = this.portMapper.selectByInIds(ids);
+        List<Long> notInIds = this.portMapper.selectByNotInIds(ids);
+        // 删码头的dockId集合
+        List<Long> deleteDock = new ArrayList<>(16);
 
+        for (Long inDockId : inDockIds) {
+            boolean flag = notInIds.contains(inDockId);
+            if (!flag) {
+                deleteDock.add(inDockId);
+            }
+        }
+
+        if (deleteDock.size() != 0) {
+            // dockId集合去重
+            List<Long> longList = deleteDock.stream().distinct().collect(Collectors.toList());
+            for (Long i : longList) {
+                this.dockMapper.deleteByDockId(i);
+            }
+        }
         return this.portMapper.deleteByIds(ids);
+
     }
 }
