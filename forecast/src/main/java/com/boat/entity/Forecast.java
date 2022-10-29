@@ -1,10 +1,8 @@
 package com.boat.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import lombok.Data;
-
 
 /**
  * @Author 李云鹏
@@ -13,31 +11,83 @@ import lombok.Data;
  */
 @Data
 public class Forecast {
-    private Long id;//主键
+    /**
+     * 主键
+     */
+    private Long id;
 
-    private BaseShip baseShip;//?????
+    /**
+     * 船名
+     */
+    private String shipName;
 
-    private String departPort;//始发港
+    /**
+     * imo号
+     */
+    private String imo;
 
-    private String lastPort;//上一港
+    /**
+     * 始发港
+     */
+    private String departPort;
 
-    private String nextPort;//下一港
+    /**
+     * 上一港
+     */
+    private String lastPort;
 
-    private String shipPoreArriveTime;//预抵时间
+    /**
+     * 下一港
+     */
+    private String nextPort;
 
-    private String shipPoreLeaveTime;//预离时间
+    /**
+     * 预抵时间
+     */
+    private String poreArriveTime;
 
-    private String dock;//靠泊码头
+    /**
+     * 预离时间
+     */
+    private String poreLeaveTime;
 
-    private String port;//靠泊泊位
+    /**
+     * 靠泊码头
+     */
+    private String dock;
 
-    private String purpose;//来港目的
+    /**
+     * 靠泊泊位
+     */
+    private String port;
 
-    private String goodsName;//货物名称
+    /**
+     * 来港目的
+     */
+    private String purpose;
 
-    private BigDecimal quantity;//货物数量
+    /**
+     * 货物名称
+     */
+    private String goodsName;
 
-    private BigDecimal draftWater;//吃水
+    /**
+     * 货物数量
+     */
+    private BigDecimal quantity;
 
-    private String updateTime;//更新时间
+    /**
+     * 吃水
+     */
+    private BigDecimal draftWater;
+
+    /**
+     * 引航站
+     */
+    private String pilotStation;
+
+    /**
+     * 拖轮公司
+     */
+    private String tugCompany;
 }
