@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boat.mapper.TugMapper">
+    <resultMap id="BaseResultMap" type="com.boat.entity.Tug">
+        <!--@mbg.generated-->
+        <!--@Table tug-->
+        <id column="tug_id" property="tugId"/>
+        <result column="tug_name" property="tugName"/>
+        <result column="tug_code" property="tugCode"/>
+        <result column="tug_company_id" property="tugCompanyId"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="creat_time" property="creatTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@select mbg.generated-->
+        tug_id, tug_name, tug_code, tug_company_id, update_time, creat_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from tug
+        where tug_id = #{tugId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete from tug
+        where tug_id = #{tugId}
+    </delete>
+    <insert id="insert" keyColumn="tug_id" keyProperty="tugId" parameterType="com.boat.entity.Tug"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into tug (tug_name, tug_code, tug_company_id)
+        values (#{tugName}, #{tugCode}, #{tugCompanyId})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.boat.entity.Tug">
+        <!--@mbg.generated-->
+        update tug
+        set tug_name = #{tugName},
+        tug_code = #{tugCode},
+        tug_company_id = #{tugCompanyId}
+        where tug_id = #{tugId}
+    </update>
+
+    <select id="selectAllByTugCompanyId" resultMap="BaseResultMap">
+        select *
+        from tug
+        where tug_company_id = #{tugCompanyId}
+    </select>
+
+
+    <delete id="deleteByCompanyId" parameterType="java.lang.Long">
+        delete
+        from tug
+        where tug_company_id = #{tugCompanyId}
+    </delete>
+</mapper>

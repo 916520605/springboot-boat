@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 import lombok.Data;
 
 /**
- * @Author 李云鹏
- * @Date 2022/9/27 17:47
- * @Version 1.0
+ * @author 李云鹏
+ * @date 2022/9/27 17:47
+ * @version 1.0
  */
 @Data
 public class Forecast {
@@ -15,6 +15,10 @@ public class Forecast {
      * 主键
      */
     private Long id;
+    /**
+     * 基础船id
+     */
+    private Long baseShipId;
 
     /**
      * 船名
@@ -25,6 +29,10 @@ public class Forecast {
      * imo号
      */
     private String imo;
+    /**
+     * 航次
+     */
+    private String voyage;
 
     /**
      * 始发港
@@ -64,7 +72,7 @@ public class Forecast {
     /**
      * 来港目的
      */
-    private String purpose;
+    private Integer purpose;
 
     /**
      * 货物名称
@@ -90,4 +98,10 @@ public class Forecast {
      * 拖轮公司
      */
     private String tugCompany;
+
+    /**
+     * 备注
+     */
+    private String remarks;
+
 }

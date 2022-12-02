@@ -1,4 +1,4 @@
-package com.boat.util;
+package com.boat.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

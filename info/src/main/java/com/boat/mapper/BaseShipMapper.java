@@ -16,17 +16,11 @@ import com.boat.entity.BaseShip;
  */
 @Mapper
 public interface BaseShipMapper {
-    int deleteByPrimaryKey(Long id);
-
-    int insert(BaseShip record);
-
     int insertSelective(BaseShip record);
 
     BaseShip selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(BaseShip record);
-
-    int updateByPrimaryKey(BaseShip record);
 
     List<BaseShip> findAllBYAll(BaseShip baseShip); // 查询所有（模糊查询）
 

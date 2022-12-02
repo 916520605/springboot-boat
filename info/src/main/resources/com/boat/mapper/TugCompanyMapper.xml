@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boat.mapper.TugCompanyMapper">
+    <resultMap id="BaseResultMap" type="com.boat.entity.TugCompany">
+        <!--@mbg.generated-->
+        <!--@Table tug_company-->
+        <id column="tug_company_id" property="tugCompanyId"/>
+        <result column="company_name" property="companyName"/>
+        <result column="company_code" property="companyCode"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="creat_time" property="creatTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        tug_company_id, company_name, company_code, update_time, creat_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from tug_company
+        where tug_company_id = #{tugCompanyId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete from tug_company
+        where tug_company_id = #{tugCompanyId}
+    </delete>
+    <insert id="insert" keyColumn="tug_company_id" keyProperty="tugCompanyId" parameterType="com.boat.entity.TugCompany"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into tug_company (company_name, company_code)
+        values (#{companyName}, #{companyCode})
+    </insert>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.boat.entity.TugCompany">
+        <!--@mbg.generated-->
+        update tug_company
+        set company_name = #{companyName},
+        company_code = #{companyCode}
+        where tug_company_id = #{tugCompanyId}
+    </update>
+
+    <select id="selectAllCompany" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tug_company
+        <where>
+            <if test="companyName != null and companyName != ''">
+                and company_name like concat('%',#{companyName},'%')
+            </if>
+            <if test="companyCode != null and companyCode != ''">
+                and company_code like concat('%',#{companyCode},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

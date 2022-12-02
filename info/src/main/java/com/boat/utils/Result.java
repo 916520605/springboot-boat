@@ -36,6 +36,11 @@ public class Result<T> {
         this.message = message;
     }
 
+    public Result(String message, T data) {
+        this.message = message;
+        this.data = data;
+    }
+
     // 下面就是根据需要返回不同参数格式的方法
     /**
      * 返回《状态码》《状态信息》《数据》 状态码来自--->>枚举 状态信息来自--->>开发人员 数据来自--->>开发人员
@@ -64,5 +69,13 @@ public class Result<T> {
      */
     public static <T> Result<T> buildR(Status status) {
         return new Result<T>(status.getCode(), status.getMessage());
+    }
+
+    public static <T> Result<T> buildR(String message) {
+        return new Result<T>(message);
+    }
+
+    public static <T> Result<T> buildR(String message, T data) {
+        return new Result<T>(message, data);
     }
 }

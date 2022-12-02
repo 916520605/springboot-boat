@@ -1,37 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boat.mapper.ForecastMapper">
-  <resultMap id="BaseResultMap" type="com.boat.entity.Forecast">
-    <!--@mbg.generated-->
-    <!--@Table t_forecast-->
-    <id column="id" property="id" />
-    <result column="depart_port" property="departPort" />
-    <result column="last_port" property="lastPort" />
-    <result column="next_port" property="nextPort" />
-    <result column="ship_pore_arrive_time" property="shipPoreArriveTime" />
-    <result column="ship_pore_leave_time" property="shipPoreLeaveTime" />
-    <result column="dock" property="dock" />
-    <result column="port" property="port" />
-    <result column="purpose" property="purpose" />
-    <result column="goods_name" property="goodsName" />
-    <result column="quantity" property="quantity" />
-    <result column="draft_water" property="draftWater" />
-    <result column="update_time" property="updateTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    id, depart_port, last_port, next_port, ship_pore_arrive_time, ship_pore_leave_time, 
-    dock, port, purpose, goods_name, quantity, draft_water, update_time
-  </sql>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.boat.entity.Forecast" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into t_forecast (depart_port, last_port, next_port, ship_pore_arrive_time, ship_pore_leave_time, 
-      dock, port, purpose, goods_name, quantity, draft_water, update_time
-      )
-    values (#{departPort}, #{lastPort}, #{nextPort}, #{shipPoreArriveTime}, #{shipPoreLeaveTime}, 
-      #{dock}, #{port}, #{purpose}, #{goodsName}, #{quantity}, #{draftWater}, #{updateTime}
-      )
-  </insert>
+    <resultMap id="BaseResultMap" type="com.boat.entity.Forecast">
+        <!--@mbg.generated-->
+        <!--@Table t_forecast-->
+        <id column="id" property="id"/>
+        <result column="ship_name" property="shipName"/>
+        <result column="imo" property="imo"/>
+        <result column="depart_port" property="departPort"/>
+        <result column="last_port" property="lastPort"/>
+        <result column="next_port" property="nextPort"/>
+        <result column="pore_arrive_time" property="poreArriveTime"/>
+        <result column="pore_leave_time" property="poreLeaveTime"/>
+        <result column="dock" property="dock"/>
+        <result column="port" property="port"/>
+        <result column="purpose" property="purpose"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="quantity" property="quantity"/>
+        <result column="draft_water" property="draftWater"/>
+        <result column="pilot_station" property="pilotStation"/>
+        <result column="tug_company" property="tugCompany"/>
+        <result column="remarks" property="remarks"/>
+        <result column="voyage" property="voyage"/>
+        <result column="base_ship_id" property="baseShipId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, ship_name, base_ship_id,imo,voyage, depart_port, last_port, next_port, pore_arrive_time, pore_leave_time,
+        dock, port, purpose, goods_name, quantity, draft_water, pilot_station, tug_company,
+        remarks
+    </sql>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.boat.entity.Forecast"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into t_forecast (ship_name, imo,base_ship_id,voyage, depart_port, last_port, next_port, pore_arrive_time,
+        pore_leave_time, dock, port, purpose, goods_name, quantity, draft_water,
+        pilot_station, tug_company, remarks)
+        values (#{shipName}, #{imo},#{baseShipId},#{voyage}, #{departPort}, #{lastPort}, #{nextPort}, #{poreArriveTime},
+        #{poreLeaveTime}, #{dock}, #{port}, #{purpose}, #{goodsName}, #{quantity}, #{draftWater},
+        #{pilotStation}, #{tugCompany}, #{remarks})
+    </insert>
 
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.boat.entity.Forecast"
+            useGeneratedKeys="true">
+        insert into t_forecast
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shipName != null and shipName != ''">
+                ship_name,
+            </if>
+            <if test="imo != null and imo != ''">
+                imo,
+            </if>
+            <if test="baseShipId != null">
+                base_ship_id,
+            </if>
+            <if test="voyage != null and voyage != ''">
+                voyage,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shipName != null and shipName != ''">
+                #{shipName},
+            </if>
+            <if test="imo != null and imo != ''">
+                #{imo},
+            </if>
+            <if test="baseShipId != null">
+                #{baseShipId},
+            </if>
+            <if test="voyage != null and voyage != ''">
+                #{voyage},
+            </if>
+        </trim>
+    </insert>
 
+    <select id="findAllByAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_forecast
+        <where>
+            <if test="shipName != null and shipName != ''">
+                and ship_name like concat('%', #{shipName}, '%')
+            </if>
+            <if test="imo != null and imo != ''">
+                and imo like concat('%', #{imo}, '%')
+            </if>
+            <if test="voyage != null and voyage != ''">
+                and voyage like concat('%',#{voyage},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBySearchNotInIds" resultMap="com.boat.mapper.BaseShipMapper.BaseResultMap">
+        select
+        <include refid="com.boat.mapper.BaseShipMapper.Base_Column_List"/>
+        from
+        (select
+        <include refid="com.boat.mapper.BaseShipMapper.Base_Column_List"/>
+        from t_baseship
+        <where>
+            id not in
+            (select base_ship_id from t_forecast)
+        </where>
+        ) as i
+        <where>
+            <if test="baseShip.shipName != null and baseShip.shipName != ''">
+                and shipName like concat('%', #{baseShip.shipName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="baseShip.imo != null and baseShip.imo != ''">
+                and imo like concat('%', #{baseShip.imo,jdbcType=VARCHAR}, '%')
+            </if>
+            and flag = 1 order by creatTime desc
+        </where>
+    </select>
+
+    <!--auto generated by MybatisCodeHelper on 2022-11-28-->
+    <select id="selectBaseShipIdByBaseShipId" resultType="java.lang.Long">
+        select base_ship_id
+        from t_forecast
+        where base_ship_id=#{baseShipId}
+    </select>
+
+    <!--auto generated by MybatisCodeHelper on 2022-11-28-->
+    <update id="updateByBaseShipId">
+        update t_forecast
+        <set>
+            <if test="shipName != null and shipName != ''">
+                ship_name = #{shipName},
+            </if>
+            <if test="imo != null and imo != ''">
+                imo = #{imo},
+            </if>
+        </set>
+        where base_ship_id=#{baseShipId}
+    </update>
+
+    <!--auto generated by MybatisCodeHelper on 2022-11-28-->
+    <delete id="deleteByBaseShipIds">
+        delete from t_forecast
+        where base_ship_id in
+        <foreach collection="baseShipIds" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

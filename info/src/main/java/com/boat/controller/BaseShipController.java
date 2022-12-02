@@ -35,11 +35,6 @@ public class BaseShipController {
         return this.baseShipService.findAll(pageNum, pageSize, baseShip);
     }
 
-    @DeleteMapping("/delete/{ids}")
-    public int deleteByIds(@PathVariable Long[] ids) {
-        return this.baseShipService.deleteByIds(ids);
-    }
-
     @PostMapping("/unique")
     public BaseShip checkImoUnique(@RequestParam(value = "imo") String imo) {
         return this.baseShipService.checkImoUnique(imo);
@@ -58,11 +53,6 @@ public class BaseShipController {
     @GetMapping("/checkImo/{id}/{imo}")
     public BaseShip getObject(@PathVariable("id") Long id, @PathVariable("imo") String imo) {
         return this.baseShipService.getObject(id, imo);
-    }
-
-    @PutMapping("/update")
-    public int update(@RequestBody BaseShip baseShip) {
-        return this.baseShipService.updateByPrimaryKeySelective(baseShip);
     }
 
     @PostMapping("/list")
