@@ -16,6 +16,9 @@ import lombok.Data;
 @Data
 public class Delegation {
 
+    /**
+     * id
+     */
     private Long id;
     /**
      * 公司名称

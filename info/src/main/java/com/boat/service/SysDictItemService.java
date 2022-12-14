@@ -67,4 +67,10 @@ public class SysDictItemService {
             return update > 0 ? Result.buildR(Status.OK, "修改成功") : Result.buildR(Status.SYSTEM_ERROR, "修改失败");
         }
     }
+
+    public Result<List<SysDictItem>> selectAllWithPurposes() {
+        List<SysDictItem> sysDictItems = this.sysDictItemMapper.selectAllInVuex();
+        return sysDictItems.size() > 0 ? Result.buildR(Status.OK, sysDictItems)
+            : Result.buildR(Status.SYSTEM_ERROR, "暂无数据");
+    }
 }

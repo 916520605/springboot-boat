@@ -15,6 +15,8 @@ import com.boat.entity.Dock;
 import com.boat.entity.Port;
 import com.boat.mapper.DockMapper;
 import com.boat.mapper.PortMapper;
+import com.boat.utils.Result;
+import com.boat.utils.Status;
 import com.boat.utils.Utils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -33,6 +35,7 @@ public class DockService {
     private PortMapper portMapper;
 
     public List<Map<String, Object>> selectDockAndPortWithPage(int pageNum, int pageSize, Dock dock) {
+
         PageHelper.startPage(pageNum, pageSize);
         List<Map<String, Object>> mapList = this.dockMapper.selectDockAndPort(dock);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(mapList);
@@ -151,5 +154,15 @@ public class DockService {
         }
         return this.portMapper.deleteByIds(ids);
 
+    }
+
+    public Result<List<Dock>> selectAll() {
+        List<Dock> docks = this.dockMapper.selectAll();
+        return Result.buildR(Status.OK, "查询成功", docks);
+    }
+
+    public Result<List<Port>> selectByDockId(Long dockId) {
+        List<Port> portList = this.portMapper.selectAllByDockId(dockId);
+        return Result.buildR(Status.OK, "查询成功", portList);
     }
 }

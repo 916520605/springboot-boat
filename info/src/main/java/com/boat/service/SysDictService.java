@@ -6,9 +6,12 @@ import javax.annotation.Resource;
 
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import com.boat.entity.SysDict;
+import com.boat.entity.SysDictItem;
+import com.boat.mapper.SysDictItemMapper;
 import com.boat.mapper.SysDictMapper;
 import com.boat.utils.Result;
 import com.boat.utils.Status;
@@ -23,6 +26,8 @@ public class SysDictService {
 
     @Resource
     private SysDictMapper sysDictMapper;
+    @Resource
+    private SysDictItemMapper sysDictItemMapper;
 
     public Result<T> deleteByPrimaryKey(Long[] ids) {
         int i = this.sysDictMapper.deleteByPrimaryKey(ids);
@@ -39,10 +44,24 @@ public class SysDictService {
         return sysDictS.size() > 0 ? Result.buildR(Status.OK, sysDictS) : Result.buildR(Status.SYSTEM_ERROR, "查无数据");
     }
 
+    /**
+     * 插入或更新 在更新字典数据的类型时，需要同步更新字典项里的类型，涉及事务。
+     * 
+     * @param sysDict sys dict类型
+     * @return {@link Result }<{@link T }>
+     * @author 李云鹏
+     * @date 2022/12/04 11:49
+     */
+    @Transactional(rollbackFor = Exception.class)
     public Result<T> insertOrUpdate(SysDict sysDict) {
         Long id = sysDict.getId();
         if (id != null) {
             int update = this.sysDictMapper.updateByPrimaryKeySelective(sysDict);
+            String type = sysDict.getType();
+            SysDictItem sysDictItem = new SysDictItem();
+            sysDictItem.setDictId(id);
+            sysDictItem.setType(type);
+            this.sysDictItemMapper.updateType(sysDictItem);
             return update > 0 ? Result.buildR(Status.OK, "更新成功") : Result.buildR(Status.SYSTEM_ERROR, "更新失败");
         } else {
             int insert = this.sysDictMapper.insertSelective(sysDict);

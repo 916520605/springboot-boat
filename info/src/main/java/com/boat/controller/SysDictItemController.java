@@ -48,4 +48,9 @@ public class SysDictItemController {
     public Result<T> deleteByIds(@PathVariable Long[] ids) {
         return this.sysDictItemService.deleteByPrimaryKey(ids);
     }
+
+    @GetMapping("/select")
+    public Result<List<SysDictItem>> getPurposeList() {
+        return this.sysDictItemService.selectAllWithPurposes();
+    }
 }

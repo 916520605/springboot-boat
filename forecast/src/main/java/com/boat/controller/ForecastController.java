@@ -51,4 +51,9 @@ public class ForecastController {
     public Result<T> deleteByIds(@PathVariable Long[] ids) {
         return this.forecastService.deleteByBaseShipIds(ids);
     }
+
+    @GetMapping("/selectById")
+    public Result<Forecast> findByBaseShipId(@RequestParam("id") Long id) {
+        return this.forecastService.findByBaseShipId(id);
+    }
 }

@@ -1,6 +1,9 @@
 package com.boat.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -52,12 +55,14 @@ public class Forecast {
     /**
      * 预抵时间
      */
-    private String poreArriveTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime poreArriveTime;
 
     /**
      * 预离时间
      */
-    private String poreLeaveTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime poreLeaveTime;
 
     /**
      * 靠泊码头
@@ -100,8 +105,22 @@ public class Forecast {
     private String tugCompany;
 
     /**
+     * 拖轮
+     */
+    private String tug;
+
+    /**
      * 备注
      */
     private String remarks;
 
+    /**
+     * 代理
+     */
+    private String delegation;
+
+    /**
+     * 船东
+     */
+    private String shipOwner;
 }

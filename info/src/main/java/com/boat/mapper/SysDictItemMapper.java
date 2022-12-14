@@ -9,14 +9,14 @@ import com.boat.entity.SysDictItem;
 
 /**
  * @author 李云鹏
- * @date 2022/11/11 11:31
  * @version 1.0
+ * @date 2022/11/11 11:31
  */
 @Mapper
 public interface SysDictItemMapper {
     /**
      * delete by primary key
-     * 
+     *
      * @param ids primaryKey
      * @return deleteCount
      */
@@ -24,7 +24,7 @@ public interface SysDictItemMapper {
 
     /**
      * insert record to table selective
-     * 
+     *
      * @param record the record
      * @return insert count
      */
@@ -32,7 +32,7 @@ public interface SysDictItemMapper {
 
     /**
      * select by primary key
-     * 
+     *
      * @param id primary key
      * @return object by primary key
      */
@@ -40,7 +40,7 @@ public interface SysDictItemMapper {
 
     /**
      * update record selective
-     * 
+     *
      * @param record the updated record
      * @return update count
      */
@@ -49,7 +49,6 @@ public interface SysDictItemMapper {
     /**
      * 字典二级页面的字典名称下拉列表
      *
-     * 
      * @return {@link List}<{@link SysDict}>
      */
     List<SysDict> selectPart();
@@ -62,4 +61,14 @@ public interface SysDictItemMapper {
      */
     List<SysDictItem> selectAllByAll(SysDictItem sysDictItem);
 
+    int updateType(SysDictItem sysDictItem);
+
+    /**
+     * 查询来港目的列表，放在vuex中
+     *
+     * @return {@link List }<{@link SysDictItem }>
+     * @author 李云鹏
+     * @date 2022/12/12 20:49
+     */
+    List<SysDictItem> selectAllInVuex();
 }

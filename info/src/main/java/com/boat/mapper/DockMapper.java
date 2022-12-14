@@ -73,4 +73,12 @@ public interface DockMapper {
      */
     int deleteByDockId(@Param("dockId") Long dockId);
 
+    /**
+     * 选择所有(存入vuex中的数据)
+     *
+     * @return {@link List }<{@link Dock }>
+     * @author 李云鹏
+     * @date 2022/12/05 13:15
+     */
+    List<Dock> selectAll();
 }

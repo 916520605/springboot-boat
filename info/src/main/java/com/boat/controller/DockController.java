@@ -27,8 +27,8 @@ public class DockController {
     private DockService dockService;
 
     @PostMapping("/list/{pageNum}/{pageSize}")
-    public List<Map<String, Object>> selectAllByPage(@PathVariable("pageNum") Integer pageNum,
-        @PathVariable("pageSize") Integer pageSize, @RequestBody Dock dock) {
+    public List<?> selectAllByPage(@PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize,
+        @RequestBody Dock dock) {
 
         return this.dockService.selectDockAndPortWithPage(pageNum, pageSize, dock);
     }
@@ -69,4 +69,13 @@ public class DockController {
 
     }
 
+    @GetMapping("/list")
+    public Result<List<Dock>> getDockList() {
+        return this.dockService.selectAll();
+    }
+
+    @GetMapping("/portList")
+    public Result<List<Port>> getPortListByDockId(@RequestParam("dockId") Long dockId) {
+        return this.dockService.selectByDockId(dockId);
+    }
 }

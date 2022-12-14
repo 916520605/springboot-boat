@@ -15,13 +15,6 @@ import com.boat.entity.Forecast;
  */
 @Mapper
 public interface ForecastMapper {
-    /**
-     * insert record to table
-     * 
-     * @param record the record
-     * @return insert count
-     */
-    int insert(Forecast record);
 
     /**
      * 插入选择性
@@ -73,6 +66,26 @@ public interface ForecastMapper {
      */
     int updateByBaseShipId(Forecast updated);
 
+    /**
+     * 批量删除基础船舶
+     *
+     * @param baseShipIds 基础船舶id的数组
+     * @return int
+     * @author 李云鹏
+     * @date 2022/12/02 15:48
+     */
     int deleteByBaseShipIds(@Param("baseShipIds") Long[] baseShipIds);
+
+    /**
+     * 通过id查询
+     *
+     * @param id 主键id
+     * @return {@link Forecast }
+     * @author 李云鹏
+     * @date 2022/12/02 18:18
+     */
+    Forecast selectById(Long id);
+
+    int updateById(@Param("updated") Forecast updated);
 
 }

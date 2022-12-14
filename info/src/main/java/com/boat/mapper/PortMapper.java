@@ -69,4 +69,14 @@ public interface PortMapper {
      * @date 2022/10/22
      */
     List<Long> selectByInIds(Long[] ids);
+
+    /**
+     * 根据码头id查询所有的泊位信息
+     *
+     * @param dockId 码头id
+     * @return {@link List }<{@link Port }>
+     * @author 李云鹏
+     * @date 2022/12/05 15:22
+     */
+    List<Port> selectAllByDockId(@Param("dockId") Long dockId);
 }

@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import com.boat.entity.BaseShip;
 import com.boat.entity.Forecast;
@@ -21,6 +22,7 @@ import com.github.pagehelper.PageInfo;
  * @version 1.0
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ForecastService {
 
     @Resource
@@ -44,7 +46,6 @@ public class ForecastService {
         return Result.buildR(Status.OK, "查询成功", new PageInfo<>(this.forecastMapper.selectBySearchNotInIds(baseShip)));
     }
 
-    @Transactional
     public Result<T> updateByPrimaryKeySelective(BaseShip record) {
         int update = this.baseShipMapper.updateByPrimaryKeySelective(record);
         String shipName = record.getShipName();
@@ -69,7 +70,6 @@ public class ForecastService {
      * @param ids 基础船舶id
      * @return
      */
-    @Transactional
     public Result<T> deleteByBaseShipIds(Long[] ids) {
         // i必须>0,表示删除基础船舶成功
         int i = this.baseShipMapper.deleteByIds(ids);
@@ -86,5 +86,11 @@ public class ForecastService {
         } else {
             return Result.buildR(Status.SYSTEM_ERROR, "删除失败");
         }
+    }
+
+    public Result<Forecast> findByBaseShipId(Long id) {
+        Forecast forecast = this.forecastMapper.selectById(id);
+        return ObjectUtils.isEmpty(forecast) ? Result.buildR(Status.SYSTEM_ERROR, "查无此数据")
+            : Result.buildR(Status.OK, "查询成功", forecast);
     }
 }

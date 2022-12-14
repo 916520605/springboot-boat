@@ -28,7 +28,7 @@ public class SysDictItem {
     /**
      * 字典项值
      */
-    private String itemValue;
+    private Integer itemValue;
 
     /**
      * 描述
