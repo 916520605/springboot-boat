@@ -119,8 +119,4 @@ public class Forecast {
      */
     private String delegation;
 
-    /**
-     * 船东
-     */
-    private String shipOwner;
 }

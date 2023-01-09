@@ -45,5 +45,13 @@ public interface SysDictMapper {
      */
     int updateByPrimaryKeySelective(SysDict record);
 
+    /**
+     * 选择所有选择性
+     *
+     * @param sysDict sys dict类型
+     * @return {@link List }<{@link SysDict }>
+     * @author 李云鹏
+     * @date 2023/01/01 14:43
+     */
     List<SysDict> selectAllBySelective(SysDict sysDict);
 }
