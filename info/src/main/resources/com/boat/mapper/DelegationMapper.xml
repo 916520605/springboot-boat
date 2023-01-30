@@ -12,13 +12,14 @@
         <result column="phone_number" property="phoneNumber"/>
         <result column="enable_state" property="enableState"/>
         <result column="agent_state" property="agentState"/>
+        <result column="ship_owner_state" property="shipOwnerState"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         id, company_name, code_of_organization, company_nature, contact_name, phone_number,
-        enable_state, agent_state, create_time, update_time
+        enable_state, agent_state,ship_owner_state, create_time, update_time
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         <!--@mbg.generated-->
@@ -61,6 +62,10 @@
             <if test="agentState != null">
                 agent_state,
             </if>
+            <if test="shipOwnerState != null">
+                ship_owner_state,
+            </if>
+
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="companyName != null">
@@ -83,6 +88,9 @@
             </if>
             <if test="agentState != null">
                 #{agentState},
+            </if>
+            <if test="shipOwnerState != null">
+                #{shipOwnerState},
             </if>
         </trim>
     </insert>
@@ -110,6 +118,9 @@
             </if>
             <if test="agentState != null">
                 agent_state = #{agentState},
+            </if>
+            <if test="shipOwnerState != null">
+                ship_owner_state = #{shipOwnerState},
             </if>
         </set>
         where id = #{id}

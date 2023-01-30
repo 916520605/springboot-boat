@@ -46,7 +46,7 @@
             <if test="itemText != null and itemText != ''">
                 item_text,
             </if>
-            <if test="itemValue != null and itemValue != ''">
+            <if test="itemValue != null">
                 item_value,
             </if>
             <if test="description != null and description != ''">
@@ -69,7 +69,7 @@
             <if test="itemText != null and itemText != ''">
                 #{itemText},
             </if>
-            <if test="itemValue != null and itemValue != ''">
+            <if test="itemValue != null">
                 #{itemValue},
             </if>
             <if test="description != null and description != ''">
@@ -96,7 +96,7 @@
             <if test="itemText != null and itemText != ''">
                 item_text = #{itemText},
             </if>
-            <if test="itemValue != null and itemValue != ''">
+            <if test="itemValue != null">
                 item_value = #{itemValue},
             </if>
             <if test="description != null and description != ''">

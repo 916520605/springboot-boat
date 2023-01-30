@@ -50,6 +50,10 @@ public class Delegation {
      * 代理状态（0启用，1禁用）
      */
     private Integer agentState;
+    /**
+     * 船东状态（0启用，1禁用）
+     */
+    private Integer shipOwnerState;
 
     /**
      * 创建时间
