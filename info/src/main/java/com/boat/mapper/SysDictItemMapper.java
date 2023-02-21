@@ -3,6 +3,7 @@ package com.boat.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.boat.entity.SysDict;
 import com.boat.entity.SysDictItem;
@@ -71,4 +72,25 @@ public interface SysDictItemMapper {
      * @date 2022/12/12 20:49
      */
     List<SysDictItem> selectAllInVuex();
+
+    /**
+     * 删除字典数据时，要同步删除字典项的所有数据
+     *
+     * @param dictIdCollection dict id集合
+     * @return int
+     * @author 李云鹏
+     * @date 2023/01/31 16:54
+     */
+    int deleteByDictIdIn(@Param("dictIdCollection") Long[] dictIdCollection);
+
+    /**
+     * 查询所有船舶性质，放入vuex中
+     *
+     * 
+     * @return {@link List }<{@link SysDictItem }>
+     * @author 李云鹏
+     * @date 2023/01/31 23:07
+     */
+    List<SysDictItem> selectAllByType();
+
 }

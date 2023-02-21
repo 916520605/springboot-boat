@@ -29,8 +29,16 @@ public class SysDictService {
     @Resource
     private SysDictItemMapper sysDictItemMapper;
 
+    /**
+     * 批量删除，注意！这里删除字典数据的同时，需要同步删除字典项的数据，涉及事务
+     * 
+     * @param ids 根据主键批量删除
+     * @return 受影响行数
+     */
+    @Transactional(rollbackFor = Exception.class)
     public Result<T> deleteByPrimaryKey(Long[] ids) {
         int i = this.sysDictMapper.deleteByPrimaryKey(ids);
+        this.sysDictItemMapper.deleteByDictIdIn(ids);
         return i > 0 ? Result.buildR(Status.OK, "删除成功") : Result.buildR(Status.SYSTEM_ERROR, "删除失败");
     }
 

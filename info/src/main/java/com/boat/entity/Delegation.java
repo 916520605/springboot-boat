@@ -38,6 +38,10 @@ public class Delegation {
      */
     private String contactName;
     /**
+     * 邮箱
+     */
+    private String email;
+    /**
      * 电话号码
      */
     private String phoneNumber;

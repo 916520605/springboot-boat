@@ -77,7 +77,7 @@ public class Forecast {
     /**
      * 来港目的
      */
-    private Integer purpose;
+    private String purpose;
 
     /**
      * 货物名称

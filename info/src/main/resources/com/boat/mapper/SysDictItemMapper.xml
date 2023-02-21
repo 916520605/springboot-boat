@@ -156,4 +156,22 @@
         where type = 'sys_arrival_destination'
         and status = 0
     </select>
+
+    <!--删除字典数据时，要同步删除字典项的所有数据 on 2023-01-31-->
+    <delete id="deleteByDictIdIn">
+        delete from sys_dict_item
+        where dict_id in
+        <foreach item="item" index="index" collection="dictIdCollection"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <!--查询所有船舶性质，放入vuex中-->
+    <select id="selectAllByType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict_item
+        where `type`='sys_ship_nature'
+    </select>
 </mapper>

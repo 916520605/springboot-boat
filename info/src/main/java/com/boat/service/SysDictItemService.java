@@ -73,4 +73,12 @@ public class SysDictItemService {
         return sysDictItems.size() > 0 ? Result.buildR(Status.OK, sysDictItems)
             : Result.buildR(Status.SYSTEM_ERROR, "暂无数据");
     }
+
+    public Result<List<SysDictItem>> selectAllShipNature() {
+        List<SysDictItem> shipNatures = this.sysDictItemMapper.selectAllByType();
+        if (shipNatures.size() == 0) {
+            return Result.buildR(Status.SYSTEM_ERROR, "暂无数据");
+        }
+        return Result.buildR(Status.OK, "查询成功", shipNatures);
+    }
 }

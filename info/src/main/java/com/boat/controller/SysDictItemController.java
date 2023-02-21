@@ -53,4 +53,9 @@ public class SysDictItemController {
     public Result<List<SysDictItem>> getPurposeList() {
         return this.sysDictItemService.selectAllWithPurposes();
     }
+
+    @GetMapping("/shipNatureList")
+    public Result<List<SysDictItem>> getShipNatureList() {
+        return this.sysDictItemService.selectAllShipNature();
+    }
 }

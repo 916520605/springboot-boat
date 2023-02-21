@@ -18,36 +18,93 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE)
 public class BaseShip {
-    private Long id; // 主键
+    /**
+     * id主键
+     */
+    private Long id;
 
-    private String shipName;// 船名
+    /**
+     * 船名
+     */
+    private String shipName;
 
-    private String builtDate;// 建成日期
+    /**
+     * 建立日期
+     */
+    private String builtDate;
 
-    private String imo;// IMO号
+    /**
+     * IMO号
+     */
+    private String imo;
 
-    private String nationality;// 国籍
+    /**
+     * 国籍
+     */
+    private String nationality;
 
-    private BigDecimal grossTonnage;// 总吨
+    /**
+     * 总吨位
+     */
+    private BigDecimal grossTonnage;
 
-    private BigDecimal netTons;// 净吨
+    /**
+     * 净吨
+     */
+    private BigDecimal netTons;
 
-    private BigDecimal DWT;// 载重吨
+    /**
+     * 载重吨
+     */
+    private BigDecimal DWT;
 
-    private String homePort;// 船籍港
+    /**
+     * 船籍港
+     */
+    private String homePort;
 
-    private String shipOwner;// 船东
+    /**
+     * 船东
+     */
+    private String shipOwner;
 
-    private String callNumber;// 呼号
+    /**
+     * 呼号
+     */
+    private String callNumber;
 
-    private String phoneNumber;// 电话或海卫通
+    /**
+     * // 电话或海卫通
+     */
+    private String phoneNumber;
 
-    private String length; // 船长
+    /**
+     * 船长
+     */
+    private String length;
 
-    private String width; // 船宽
+    /**
+     * 船宽
+     */
+    private String width;
 
-    private String flag; // 逻辑删除标识，1是未删，0是已删
+    /**
+     * 逻辑删除标识，1是未删，0是已删
+     */
+    private String flag;
 
-    private String creatTime;// 创建时间，排序字段
+    /**
+     * 创建时间，排序字段
+     */
+    private String creatTime;
+    /**
+     * 电子邮件地址
+     */
+    private String emailAddress;
+
+    /**
+     * 船舶性质
+     */
+    private String shipNature;
 
 }

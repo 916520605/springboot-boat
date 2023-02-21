@@ -20,11 +20,13 @@
         <result column="width" jdbcType="VARCHAR" property="width"/>
         <result column="flag" jdbcType="CHAR" property="flag"/>
         <result column="creatTime" jdbcType="TIMESTAMP" property="creatTime"/>
+        <result column="email_address" jdbcType="VARCHAR" property="emailAddress"/>
+        <result column="ship_nature" jdbcType="VARCHAR" property="shipNature"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         id, shipName, builtDate, imo, nationality, grossTonnage, netTons, DWT, homePort,
-        shipOwner, callNumber, phoneNumber, `length`, width, flag, creatTime
+        shipOwner, callNumber, phoneNumber, `length`, width, flag, creatTime,email_address,ship_nature
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         <!--@mbg.generated-->
@@ -83,6 +85,12 @@
             <if test="creatTime != null">
                 creatTime,
             </if>
+            <if test="emailAddress != null and emailAddress != ''">
+                email_address,
+            </if>
+            <if test="shipNature != null and shipNature != ''">
+                ship_nature
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="shipName != null">
@@ -129,6 +137,12 @@
             </if>
             <if test="creatTime != null">
                 #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="emailAddress != null and emailAddress != ''">
+                #{emailAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="shipNature != null and shipNature != ''">
+                #{shipNature,jdbcType=VARCHAR}
             </if>
         </trim>
     </insert>
@@ -180,6 +194,12 @@
             </if>
             <if test="creatTime != null">
                 creatTime = #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="emailAddress != null and emailAddress != ''">
+                email_address=#{emailAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="shipNature != null and shipNature != ''">
+                ship_nature=#{shipNature,jdbcType=VARCHAR}
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
