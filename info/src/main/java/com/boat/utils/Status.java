@@ -12,7 +12,7 @@ public enum Status {
     /**
      * 成功，系统异常，sql语句异常
      */
-    OK(200, "请求成功"), SYSTEM_ERROR(101, "系统异常"), SQL_ERROR(109, "SQL语句异常");
+    OK(200, "请求成功"), SYSTEM_ERROR(101, "系统异常"), SQL_ERROR(109, "SQL语句异常"), TOKEN_ERROR(110, "token异常");
 
     /**
      * 状态码

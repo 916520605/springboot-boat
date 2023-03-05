@@ -4,7 +4,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.boat.utils.MyInterceptor;
+import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * @author 李云鹏
@@ -12,11 +13,12 @@ import com.boat.utils.MyInterceptor;
  * @date 2023/1/4 21:34
  */
 @Configuration
+
 public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new MyInterceptor()).excludePathPatterns("/user/login"
-        // 除了登录，其他全部拦截
-        );
+        registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin())).addPathPatterns("/**")
+            .excludePathPatterns("/user/doLogin");
+
     }
 }

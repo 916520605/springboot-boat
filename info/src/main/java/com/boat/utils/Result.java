@@ -11,6 +11,7 @@ import lombok.Data;
  */
 @Data
 public class Result<T> {
+    private int code;
     // 状态码
     private Integer status;
     // 错误的状态信息
@@ -36,9 +37,14 @@ public class Result<T> {
         this.message = message;
     }
 
-    public Result(String message, T data) {
+    private Result(String message, T data) {
         this.message = message;
         this.data = data;
+    }
+
+    private Result(String message, int code) {
+        this.message = message;
+        this.code = code;
     }
 
     // 下面就是根据需要返回不同参数格式的方法
@@ -73,6 +79,10 @@ public class Result<T> {
 
     public static <T> Result<T> buildR(String message) {
         return new Result<T>(message);
+    }
+
+    public static <T> Result<T> buildR(String message, int code) {
+        return new Result<T>(message, code);
     }
 
     public static <T> Result<T> buildR(String message, T data) {

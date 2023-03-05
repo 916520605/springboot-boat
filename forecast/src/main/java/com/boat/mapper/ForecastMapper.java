@@ -86,6 +86,14 @@ public interface ForecastMapper {
      */
     Forecast selectById(Long id);
 
+    /**
+     * TODO:暂未处理
+     *
+     * @param updated 更新
+     * @return int
+     * @author 李云鹏
+     * @date 2023/02/25 17:54
+     */
     int updateById(@Param("updated") Forecast updated);
 
 }
