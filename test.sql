@@ -1,17 +1,17 @@
 /*
- Navicat MySQL Data Transfer
+ Navicat Premium Data Transfer
 
  Source Server         : LYP
  Source Server Type    : MySQL
- Source Server Version : 80028
+ Source Server Version : 80028 (8.0.28)
  Source Host           : localhost:3306
  Source Schema         : test
 
  Target Server Type    : MySQL
- Target Server Version : 80028
+ Target Server Version : 80028 (8.0.28)
  File Encoding         : 65001
 
- Date: 14/12/2022 16:32:15
+ Date: 05/03/2023 19:12:12
 */
 
 SET NAMES utf8mb4;
@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `pilot_station`;
 CREATE TABLE `pilot_station`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '引航站名字',
-  `help_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `help_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '助记码',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id`(`id` ASC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'pilot_station' ROW_FORMAT = Dynamic;
@@ -50,13 +50,13 @@ CREATE TABLE `sys_dict`  (
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '字典类型',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict
 -- ----------------------------
-INSERT INTO `sys_dict` VALUES (1, '公司性质', '公司性质列表', 0, '2022-11-09 10:29:21', '2022-12-11 13:46:02', 'sys_company_nature');
 INSERT INTO `sys_dict` VALUES (13, '来港目的', '来港目的列表', 0, '2022-11-14 11:46:55', '2022-12-04 13:08:11', 'sys_arrival_destination');
+INSERT INTO `sys_dict` VALUES (16, '船舶性质', '船舶性质列表', 0, '2023-01-31 18:05:26', NULL, 'sys_ship_nature');
 
 -- ----------------------------
 -- Table structure for sys_dict_item
@@ -77,17 +77,21 @@ CREATE TABLE `sys_dict_item`  (
   INDEX `index_table_dict_id`(`dict_id` ASC) USING BTREE,
   INDEX `index_table_sort_order`(`sort_order` ASC) USING BTREE,
   INDEX `index_table_dict_status`(`status` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典项表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_item
 -- ----------------------------
-INSERT INTO `sys_dict_item` VALUES (1, '1', '有限责任公司', '0', '公司性质类型', 1, 0, '2022-11-11 11:25:46', '2022-11-12 04:05:29', 'sys_company_nature');
-INSERT INTO `sys_dict_item` VALUES (2, '1', '股份有限公司', '1', '公司性质类型', 2, 0, '2022-11-11 11:26:01', '2022-11-16 15:16:15', 'sys_company_nature');
 INSERT INTO `sys_dict_item` VALUES (9, '13', '卸货', '0', '来港卸货', 1, 0, '2022-11-14 11:47:53', '2022-12-12 21:16:10', 'sys_arrival_destination');
 INSERT INTO `sys_dict_item` VALUES (10, '13', '装货', '1', '来港装货', 2, 0, '2022-11-14 11:48:12', '2022-12-04 13:08:11', 'sys_arrival_destination');
 INSERT INTO `sys_dict_item` VALUES (11, '13', '其他', '2', '来港其他', 3, 0, '2022-11-14 11:48:26', '2022-12-04 13:08:11', 'sys_arrival_destination');
-INSERT INTO `sys_dict_item` VALUES (13, '13', '修船', '3', '来港修船', 4, 0, '2022-11-30 12:21:39', '2022-12-12 21:31:31', 'sys_arrival_destination');
+INSERT INTO `sys_dict_item` VALUES (13, '13', '修船', '3', '来港修船', 4, 0, '2022-11-30 12:21:39', '2023-02-20 02:36:28', 'sys_arrival_destination');
+INSERT INTO `sys_dict_item` VALUES (18, '16', '散货船', '0', '散货船', 0, 1, '2023-01-31 18:05:46', '2023-02-25 20:29:56', 'sys_ship_nature');
+INSERT INTO `sys_dict_item` VALUES (19, '16', '危险品船', '1', '危险品船', 1, 0, '2023-01-31 18:06:31', NULL, 'sys_ship_nature');
+INSERT INTO `sys_dict_item` VALUES (20, '16', '件杂货船', '2', '件杂货船', 2, 0, '2023-01-31 18:07:26', NULL, 'sys_ship_nature');
+INSERT INTO `sys_dict_item` VALUES (21, '16', '集装箱船', '3', '集装箱船', 3, 0, '2023-01-31 18:07:48', NULL, 'sys_ship_nature');
+INSERT INTO `sys_dict_item` VALUES (22, '16', '特种船', '4', '特种船舶', 4, 0, '2023-01-31 18:09:50', NULL, 'sys_ship_nature');
+INSERT INTO `sys_dict_item` VALUES (23, '16', '油轮', '5', '油轮', 5, 0, '2023-01-31 18:10:30', NULL, 'sys_ship_nature');
 
 -- ----------------------------
 -- Table structure for t_baseship
@@ -110,25 +114,29 @@ CREATE TABLE `t_baseship`  (
   `width` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1',
   `creatTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `email_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `ship_nature` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '基本信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '基本信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_baseship
 -- ----------------------------
-INSERT INTO `t_baseship` VALUES (1, '神华538', '2022-09-15', '96325', 'USA', 46538.00, 36423.00, 68975.00, '连云港', '神华中海航运有限公司', NULL, NULL, '199.99', NULL, '1', '2022-09-22 20:24:10');
-INSERT INTO `t_baseship` VALUES (3, '安诚山', '2007-02-22', '78956', 'CHN', 46538.00, 36423.00, 56565.00, '湛江', '中远海运散货运输有限公司', '5T6F', NULL, '155.23', NULL, '1', '2022-09-23 04:00:57');
-INSERT INTO `t_baseship` VALUES (4, '艾丽莎', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2022-09-24 19:10:27');
-INSERT INTO `t_baseship` VALUES (5, '波塞冬', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 19:14:35');
-INSERT INTO `t_baseship` VALUES (6, '阿波罗', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 19:15:11');
-INSERT INTO `t_baseship` VALUES (7, '雅典娜', '2022-09-13', '1234', NULL, 456.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 19:16:04');
-INSERT INTO `t_baseship` VALUES (8, '阿尔泰斯', NULL, NULL, NULL, NULL, NULL, NULL, 'CNTP', NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 19:58:26');
-INSERT INTO `t_baseship` VALUES (9, '奥丁', NULL, NULL, 'ARM', NULL, NULL, NULL, 'CNTP', NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 20:18:01');
-INSERT INTO `t_baseship` VALUES (10, '芙蕾雅', '2022-11-08', '4567890', 'ABW', NULL, NULL, NULL, 'CNHLN', NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 22:08:53');
-INSERT INTO `t_baseship` VALUES (11, '洒点水', NULL, '111', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 23:03:28');
-INSERT INTO `t_baseship` VALUES (17, '1231245设施', NULL, '2223', 'AIA', 55566.00, 456565.00, NULL, 'CNTP', '这个是测试的船东名字', NULL, NULL, NULL, NULL, '0', '2022-09-29 00:40:54');
-INSERT INTO `t_baseship` VALUES (18, '艾丽莎', NULL, NULL, NULL, 456.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2022-09-29 00:40:54');
-INSERT INTO `t_baseship` VALUES (19, '测试船舶', '2000-04-06', '9966665', 'CHE', 56789.00, 12345.00, 45678.00, 'CNTP', 'test.company.com', 'R6794', '1888888888', '188.88', '54.12', '1', '2022-11-22 08:20:14');
+INSERT INTO `t_baseship` VALUES (1, '神华538', '2022-09-15', '96325', 'USA', 46538.00, 36423.00, 68975.00, '连云港', '神华中海航运有限公司', NULL, NULL, '199.99', NULL, '1', '2022-09-22 20:24:10', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (3, '安诚山', '2007-02-22', '78956', 'CHN', 46538.00, 36423.00, 56565.00, '湛江', '中远海运散货运输有限公司', '5T6F', NULL, '155.23', NULL, '1', '2022-09-23 04:00:57', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (4, '艾丽莎', NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2022-09-24 19:10:27', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (5, '波塞冬', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 19:14:35', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (6, '阿波罗', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 19:15:11', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (7, '雅典娜', '2022-09-13', '1234', NULL, 456.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 19:16:04', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (8, '阿尔泰斯', NULL, NULL, NULL, NULL, NULL, NULL, 'CNTP', NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 19:58:26', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (9, '奥丁', NULL, NULL, 'ARM', NULL, NULL, NULL, 'CNTP', NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 20:18:01', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (10, '芙蕾雅', '2022-11-08', '4567890', 'AND', NULL, NULL, NULL, 'TWSUO', NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 22:08:53', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (11, '洒点水', NULL, '111', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2022-09-24 23:03:28', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (17, '1231245设施', NULL, '2223', 'AIA', 55566.00, 456565.00, NULL, 'CNTP', '这个是测试的船东名字', NULL, NULL, NULL, NULL, '0', '2022-09-29 00:40:54', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (18, '艾丽莎', NULL, NULL, NULL, 456.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2022-09-29 00:40:54', NULL, NULL);
+INSERT INTO `t_baseship` VALUES (19, '测试船舶', '2000-04-07', '9966665', 'CHE', 567890.00, 12345.00, 45678.00, 'CNTP', 'test.company.com', 'R6794', '1888888888', '188.88', '54.12', '1', '2022-11-22 08:20:14', 'zzzxlyp@qq.com', '2');
+INSERT INTO `t_baseship` VALUES (22, 'wwww1', NULL, '7845', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-01-30 22:23:23', NULL, '1');
+INSERT INTO `t_baseship` VALUES (23, 'wwww2', NULL, '45', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-01-30 22:23:23', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_delegation
@@ -145,6 +153,8 @@ CREATE TABLE `t_delegation`  (
   `agent_state` int NOT NULL DEFAULT 0 COMMENT '代理状态（0启用，1禁用）',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `ship_owner_state` int NOT NULL DEFAULT 0 COMMENT '船东状态',
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `id`(`id` ASC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 't_delegation' ROW_FORMAT = Dynamic;
@@ -152,8 +162,8 @@ CREATE TABLE `t_delegation`  (
 -- ----------------------------
 -- Records of t_delegation
 -- ----------------------------
-INSERT INTO `t_delegation` VALUES (1, '鑫佳船舶代理有限公司', '11111111', 1, '测试名称', '1888888888', 1, 0, '2022-11-16 11:24:35', '2022-11-29 21:50:34');
-INSERT INTO `t_delegation` VALUES (2, '神华中海航运有限公司', '2222', 1, '是的是的', '223334', 0, 1, '2022-11-17 14:24:15', '2022-11-18 13:46:29');
+INSERT INTO `t_delegation` VALUES (1, '鑫佳船舶代理有限公司', '11111111', 1, '测试名称', '1888888888', 1, 0, '2022-11-16 11:24:35', '2023-01-30 16:58:25', 1, 'zzzxlyp@qq.com');
+INSERT INTO `t_delegation` VALUES (2, '神华中海航运有限公司', '2222', 1, '是的是的', '223334', 0, 1, '2022-11-17 14:24:15', '2023-01-30 17:06:02', 0, 'shenhua11@shenhua.cn');
 
 -- ----------------------------
 -- Table structure for t_dock
@@ -164,7 +174,7 @@ CREATE TABLE `t_dock`  (
   `dock_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `dock_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`dock_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '码头表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '码头表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_dock
@@ -172,6 +182,7 @@ CREATE TABLE `t_dock`  (
 INSERT INTO `t_dock` VALUES (1, '通常码头', '001');
 INSERT INTO `t_dock` VALUES (6, '新增', '003');
 INSERT INTO `t_dock` VALUES (14, '测试', '002');
+INSERT INTO `t_dock` VALUES (17, '靖江扬子江码头', '004');
 
 -- ----------------------------
 -- Table structure for t_forecast
@@ -188,7 +199,7 @@ CREATE TABLE `t_forecast`  (
   `pore_leave_time` datetime NULL DEFAULT NULL COMMENT '预离时间',
   `dock` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '靠泊码头',
   `port` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '靠泊泊位',
-  `purpose` int NULL DEFAULT 0 COMMENT '来港目的',
+  `purpose` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '来港目的',
   `goods_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '货物名称',
   `quantity` decimal(13, 4) NULL DEFAULT NULL COMMENT '货物数量',
   `draft_water` decimal(13, 2) NULL DEFAULT NULL COMMENT '吃水',
@@ -202,13 +213,16 @@ CREATE TABLE `t_forecast`  (
   PRIMARY KEY (`id`, `base_ship_id`) USING BTREE,
   UNIQUE INDEX `id`(`id` ASC) USING BTREE,
   INDEX `base_ship_id`(`base_ship_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'forecast' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'forecast' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_forecast
 -- ----------------------------
-INSERT INTO `t_forecast` VALUES (3, '测试船舶', '9966665', '', '', '', '2022-12-10 13:32:32', '2022-12-21 13:32:37', '', '', 0, '', 123456.7890, NULL, '', '', '', '2022', 19, NULL, NULL);
-INSERT INTO `t_forecast` VALUES (5, '芙蕾雅', '4567890', '', '', '', NULL, NULL, '', '', 0, '', NULL, NULL, '', '', '', '2022112901', 10, NULL, NULL);
+INSERT INTO `t_forecast` VALUES (3, '测试船舶', '9966665', '', '', '', '2022-12-10 13:32:32', '2022-12-21 13:32:37', '', '', '0', '', 123456.7890, NULL, '', '', '', '2022', 19, NULL, NULL);
+INSERT INTO `t_forecast` VALUES (5, '芙蕾雅', '4567890', '', '', '', NULL, NULL, '', '', '2', '', NULL, NULL, '', '', '', '2022112901', 10, NULL, NULL);
+INSERT INTO `t_forecast` VALUES (6, '阿尔泰斯', '', '', '', '', NULL, NULL, '', '', '0', '', NULL, NULL, '', '', '', NULL, 8, NULL, NULL);
+INSERT INTO `t_forecast` VALUES (7, 'wwww1', '7845', '', '', '', NULL, NULL, '', '', '0', '', NULL, NULL, '', '', '', '222', 22, NULL, NULL);
+INSERT INTO `t_forecast` VALUES (8, '阿波罗', '', '', '', '', NULL, NULL, '', '', NULL, '', NULL, NULL, '', '', '', '202333', 6, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_nationality
@@ -485,7 +499,7 @@ CREATE TABLE `t_port`  (
   `port_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `port_draft` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '泊位表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '泊位表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_port
@@ -507,6 +521,24 @@ INSERT INTO `t_port` VALUES (43, 1, '5号泊位', '5', '6.9');
 INSERT INTO `t_port` VALUES (44, 14, '4号测试泊位', '4', '6.6');
 INSERT INTO `t_port` VALUES (45, 14, '5号测试泊位', '7', '3.6');
 INSERT INTO `t_port` VALUES (48, 6, '5号泊位', '23453424', '5.6');
+INSERT INTO `t_port` VALUES (50, 17, '2号泊位', '003', '6.9');
+INSERT INTO `t_port` VALUES (51, 17, '3号泊位', '004', '5.5');
+
+-- ----------------------------
+-- Table structure for t_user
+-- ----------------------------
+DROP TABLE IF EXISTS `t_user`;
+CREATE TABLE `t_user`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_user
+-- ----------------------------
+INSERT INTO `t_user` VALUES (1, '111', '222');
 
 -- ----------------------------
 -- Table structure for t_wordport

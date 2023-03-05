@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boat.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.boat.entity.User">
+        <!--@mbg.generated-->
+        <!--@Table t_wordport-->
+        <id column="id" property="id"/>
+        <result column="username" property="userName"/>
+        <result column="password" property="password"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, username, password
+    </sql>
+
+    <select id="selectUserByNameAndPassword" resultType="com.boat.entity.User">
+        select id, username, password
+        from t_user
+        where username = #{userName}
+          and password = #{password}
+    </select>
+</mapper>
