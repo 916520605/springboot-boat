@@ -30,4 +30,5 @@ public class ForeCastApplication {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
+
 }

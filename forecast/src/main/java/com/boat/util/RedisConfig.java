@@ -25,4 +25,5 @@ public class RedisConfig {
         template.setHashValueSerializer(jackson2JsonRedisSerializer);
         return template;
     }*/
+
 }
